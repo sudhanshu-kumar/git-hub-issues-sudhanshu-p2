@@ -1,6 +1,7 @@
 import React from "react";
 import "./IssueList.css";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const IssueList = props => {
   // console.log(props.issue);
@@ -8,7 +9,7 @@ const IssueList = props => {
     <div className="issue-box">
       <h4>
         <i class="material-icons">error_outline</i>
-        {props.issue.title}{" "}
+        <Link to={`/${props.issue.number}`}>{props.issue.title}</Link>{" "}
         {props.issue.labels.map(label => {
           return (
             <span style={{ background: "#" + label.color, padding: "2px" }}>

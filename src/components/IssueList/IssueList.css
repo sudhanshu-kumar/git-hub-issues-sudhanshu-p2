@@ -1,5 +1,5 @@
 .issue-box {
-  width: 800px;
+  width: 850px;
   border: 1px solid gray;
   display: flex;
   flex-direction: column;
@@ -10,6 +10,11 @@
 .issue-box h4 {
   margin-left: 10px;
   width: 600px;
+}
+
+.issue-box h4 a {
+  text-decoration: none;
+  color: black;
 }
 
 .issue-box > h4 > i {

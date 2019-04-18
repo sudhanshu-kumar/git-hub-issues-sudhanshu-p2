@@ -12,8 +12,8 @@
   align-items: center;
   margin-top: 20px;
   background: lightblue;
-  height: 100px;
-  width: 800px;
+  height: 150px;
+  width: 850px;
   border: 1px solid gray;
 }
 
@@ -23,7 +23,38 @@
   justify-content: space-around;
   align-items: center;
   height: 40px;
-  width: 800px;
-  
-  
+  width: 850px;
+}
+
+.pagination {
+  margin-left: 10%;
+}
+
+.pagination li {
+  list-style: none;
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  /* float: left; */
+  padding: 8px 16px;
+  text-decoration: none;
+  cursor: pointer;
+  border: black;
+  transition: background-color 0.3s;
+}
+
+.pagination .active a {
+  background-color: #0366d6;
+  border-color: #0366d6;
+  color: #fff;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: green;
+}
+
+.pagination .break-me a {
+  background-color: white;
 }

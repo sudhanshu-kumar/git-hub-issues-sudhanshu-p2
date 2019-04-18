@@ -27,12 +27,13 @@ h2 {
     width: 100px;
     height: 50px;
     margin-left: 100px;
+    margin-top: 34px;
     background: white;
 }
 
 .head-state {
   margin-left: 4px;
-  background: gray;
+  background: rgb(197, 197, 197);
 }
 
 /* .head-bar span {
@@ -48,11 +49,23 @@ h2 {
 
 .title-box {
   display: flex;
+  justify-content: space-around;
+}
+
+.title-box span {
+  display: flex;
+}
+
+.title-box button {
+  align-self: center;
+  justify-self: flex-end;
+  width: 80px;
 }
 
 .title-box img {
-  width: 150px;
-  height: 80px;
+  width: 18px;
+  height: 20px;
+  margin-top: 25px;
 }
 
 .title-box h2 {
