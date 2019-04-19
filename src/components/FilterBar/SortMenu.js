@@ -13,7 +13,6 @@ const SortMenu = props => {
         <MenuItem value="">
           <em>None</em>
         </MenuItem>
-        <MenuItem value="sortBy">Sort By</MenuItem>
         <MenuItem value="newest">Newest</MenuItem>
         <MenuItem value="oldest">Oldest</MenuItem>
         <MenuItem value="recently updated">Recently Updated</MenuItem>

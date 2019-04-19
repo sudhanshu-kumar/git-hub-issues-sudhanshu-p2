@@ -9,7 +9,7 @@ const IssueList = props => {
     <div className="issue-box">
       <h4>
         <i class="material-icons">error_outline</i>
-        <Link to={`/${props.issue.number}`}>{props.issue.title}</Link>{" "}
+        <Link to={`/issues/${props.issue.number}`}>{props.issue.title}</Link>{" "}
         {props.issue.labels.map(label => {
           return (
             <span style={{ background: "#" + label.color, padding: "2px" }}>

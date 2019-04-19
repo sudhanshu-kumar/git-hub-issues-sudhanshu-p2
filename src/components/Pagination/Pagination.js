@@ -15,6 +15,7 @@ const Pagination = props => {
       containerClassName={"pagination"}
       // subContainerClassName={"pages pagination"}
       activeClassName={"active"}
+      forcePage={props.forcePage}
     />
   );
 };

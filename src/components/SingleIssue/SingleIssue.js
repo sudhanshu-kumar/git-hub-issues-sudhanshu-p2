@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./SingleIssue.css";
 import moment from "moment";
-import { myToken } from "../../Auth";
+// import { myToken } from "../../Auth";
 // import ReactMarkDown from "react-markdown";
 // const ReactMarkdown = require('react-markdown')
 
@@ -19,8 +19,10 @@ class SingleIssue extends Component {
 
   handleButton = event => {
     console.log(event.target.value);
+    const myToken = sessionStorage.getItem('myToken');
     console.log("singleissue", myToken);
-    if (!myToken) {
+    // if (!myToken) {
+      if(!sessionStorage.getItem("myToken")) {
       window.alert("Login First");
       return;
     }
@@ -57,41 +59,49 @@ class SingleIssue extends Component {
     // document.getElementsByClassName("add-comment-field")[0].value("");
   };
 
-  handleDelete = event => {
-    const { number } = this.props.match.params;
-    if (!myToken) {
+  handleDelete = async event => {
+    // const { number } = this.props.match.params;
+    const commentId = event.target.id;
+    const myToken = sessionStorage.getItem('myToken');
+    console.log("singleissue", myToken);
+    // if (!myToken) {
+      if(!sessionStorage.getItem("myToken")) {
       window.alert("Login First");
       return;
     }
-    fetch(
+    const { status } = await fetch(
       `https://api.github.com/repos/jacky1205/testReact/issues/comments/${
         event.target.id
       }?access_token=${myToken}`,
       {
         method: "DELETE"
       }
-    )
-      .then(() => {
-        fetch(
-          `https://api.github.com/repos/jacky1205/testReact/issues/${number}/comments`
-        )
-          .then(res => res.json())
-          .then(data => {
-            this.setState({ comments: data });
-            console.log("comments", data);
-          })
-          .catch(err => console.log(err));
-      })
-      .catch(error => console.error(error));
-
-
-  }
+    ).catch(error => {
+      console.error(error);
+      alert("something went wrong", error);
+    });
+    if (status === 204) {
+      const comments = this.state.comments.filter(
+        comment => comment.id !== parseInt(commentId)
+      );
+      this.setState({ comments });
+    }
+    // await fetch(
+    //   `https://api.github.com/repos/jacky1205/testReact/issues/${number}/comments`
+    // )
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     this.setState({ comments: data });
+    //     console.log("comments", data);
+    //   })
+    //   .catch(err => console.log(err));
+  };
 
   async componentDidMount() {
     console.log("comonent did mount");
     const { number } = this.props.match.params;
     console.log(number);
-    console.log("singleissue", myToken);
+    console.log("singleissue", sessionStorage.getItem("myToken"));
     await fetch(
       `https://api.github.com/repos/jacky1205/testReact/issues/${number}`
     )
@@ -154,8 +164,10 @@ class SingleIssue extends Component {
                   </span>
                   <div className="body">
                     {comment.body}
-                    {comment.user.login === "sudhanshu-kumar" && myToken ? (
-                      <button id={comment.id} onClick={this.handleDelete}>Delete</button>
+                    {(comment.user.login === "sudhanshu-kumar" && sessionStorage.getItem("myToken")) ? (
+                      <button id={comment.id} onClick={this.handleDelete}>
+                        Delete
+                      </button>
                     ) : (
                       <span />
                     )}

@@ -19,7 +19,8 @@ import { Authentication } from "./Auth";
 class App extends Component {
   state = {
     issues: [],
-    myToken: undefined
+    // myToken: undefined
+    pageNumber: 0
   };
   issuesCopy = [];
 
@@ -174,7 +175,7 @@ class App extends Component {
   };
 
   handleSearch = event => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       if (event.target.value === "") {
         this.setState({ issues: this.issuesCopy });
       } else {
@@ -189,6 +190,7 @@ class App extends Component {
   };
 
   handlePageChange = event => {
+    this.props.history.push(`/${event.selected + 1}`);
     console.log(event);
     fetch(
       `https://api.github.com/repos/freeCodeCamp/freeCodeCamp/issues?page=${event.selected +
@@ -197,18 +199,23 @@ class App extends Component {
       .then(res => res.json())
       .then(data => {
         this.issuesCopy = data;
-        this.setState({ issues: data });
+        this.setState({ issues: data, pageNumber: event.selected });
       })
       .catch(err => console.log(err));
   };
 
   componentDidMount() {
     console.log("comonent did mount");
-    fetch("https://api.github.com/repos/jacky1205/testReact/issues")
+    const page = this.props.match.params.pageNumber;
+    console.log(page);
+    fetch(
+      `https://api.github.com/repos/freeCodeCamp/freeCodeCamp/issues?page=${page}`
+    )
       .then(res => res.json())
       .then(data => {
+        console.log(data);
         this.issuesCopy = data;
-        this.setState({ issues: data });
+        this.setState({ issues: data, pageNumber: page });
       })
       .catch(err => console.log(err));
   }
@@ -223,7 +230,7 @@ class App extends Component {
         />
         <BrowserRouter>
           <Route
-            path="/"
+            path="/:pageNumber"
             component={() => {
               return (
                 <div>
@@ -247,14 +254,17 @@ class App extends Component {
                     return <IssueList issue={issue} />;
                   })}
                   <div>
-                    <Pagination handlePageChange={this.handlePageChange} />
+                    <Pagination
+                      handlePageChange={this.handlePageChange}
+                      forcePage={this.state.pageNumber}
+                    />
                   </div>
                 </div>
               );
             }}
             exact
           />
-          <Route path="/:number" component={SingleIssue} exact />
+          <Route path="/issues/:number" component={SingleIssue} exact />
         </BrowserRouter>
       </div>
     );
