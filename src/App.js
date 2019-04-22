@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actionTypes from "./store/actions";
 import Fuse from "fuse.js";
 import "./App.css";
 import HeadContainer from "./components/HeadBar/HeadContainer";
@@ -207,21 +209,22 @@ class App extends Component {
   componentDidMount() {
     console.log("comonent did mount");
     const page = this.props.match.params.pageNumber;
+    this.props.getData(page)
     console.log(page);
-    fetch(
-      `https://api.github.com/repos/freeCodeCamp/freeCodeCamp/issues?page=${page}`
-    )
-      .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        this.issuesCopy = data;
-        this.setState({ issues: data, pageNumber: page });
-      })
-      .catch(err => console.log(err));
+    // fetch(
+    //   `https://api.github.com/repos/freeCodeCamp/freeCodeCamp/issues?page=${page}`
+    // )
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log(data);
+    //     this.issuesCopy = data;
+    //     this.setState({ issues: data, pageNumber: page });
+    //   })
+    //   .catch(err => console.log(err));
   }
 
   render() {
-    console.log("render", this.props);
+    console.log("render", this.props.issues);
     return (
       <div className="App">
         <HeadContainer
@@ -271,4 +274,19 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    issues: state.issues
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    getData: (page) => dispatch({ type: actionTypes.GET_INITIAL_ISSUES, payLoad: { page } })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);

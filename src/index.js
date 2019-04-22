@@ -1,14 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter, Route } from "react-router-dom";
+import reducer from "./store/reducer";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Route path="/:pageNumber" component={App} />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <Route path="/:pageNumber" component={App} />
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );
 

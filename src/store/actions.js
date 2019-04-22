@@ -1,0 +1,1 @@
+export const GET_INITIAL_ISSUES = "GET_INITIAL_ISSUES";
