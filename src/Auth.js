@@ -18,21 +18,18 @@ provider.setCustomParameters({
 let myToken, user;
 const Authentication = async event => {
   console.log(event.innerHTML);
-  // if(event.innerHTML === "SignIn") {
   if (!sessionStorage.getItem("myToken") && event.innerHTML === "SignIn") {
-    // event.innerHTML = "SignOut";
-    // if (myToken) return myToken;
     const result = await firebase.auth().signInWithPopup(provider);
     myToken = result.credential.accessToken;
     sessionStorage.setItem("myToken", myToken);
     user = result.user;
     console.log(user);
     event.innerHTML = "SignOut";
-    return myToken;
+    // return myToken;
   }
-  // if (event.innerHTML === "SignOut") {
-  if (sessionStorage.getItem("myToken") && event.innerHTML === "SignOut") {
-    event.innerHTML = "SignIn";
+  // if (sessionStorage.getItem("myToken") && event.innerHTML === "SignOut")
+  else {
+    // event.innerHTML = "SignIn";
     firebase
       .auth()
       .signOut()
@@ -40,35 +37,12 @@ const Authentication = async event => {
         myToken = undefined;
         sessionStorage.removeItem("myToken");
         console.log("Sign-out successful.");
+        event.innerHTML = "SignIn";
       })
       .catch(function(error) {
-        // An error happened.
         console.log(error);
       });
   }
-
-  // .then(function(result) {
-  //   // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-  //   var token = result.credential.accessToken;
-  //   myToken = token;
-  //   // The signed-in user info.
-  //   var user = result.user;
-  //   console.log(token, user);
-  //   // ...
-  //   return token;
-  // })
-  // .catch(function(error) {
-  //   console.log(error);
-  // Handle Errors here.
-  // var errorCode = error.code;
-  // var errorMessage = error.message;
-  // // The email of the user's account used.
-  // var email = error.email;
-  // // The firebase.auth.AuthCredential type that was used.
-  // var credential = error.credential;
-  // ...
-  // });
 };
 
-// exports.token = myToken;
-export { Authentication, myToken, user };
+export { Authentication };

@@ -7,7 +7,7 @@ const Pagination = props => {
       previousLabel={"previous"}
       nextLabel={"next"}
       breakLabel={"..."}
-      breakClassName={"break-me"}
+      // breakClassName={"break-me"}
       pageCount={10}
       marginPagesDisplayed={2}
       pageRangeDisplayed={5}

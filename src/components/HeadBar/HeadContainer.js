@@ -14,7 +14,8 @@ const HeadContainer = props => {
           <h2> freeCodeCamp</h2>
         </span>
         <button value="SignIn" onClick={props.handleSignIn}>
-          {sessionStorage.getItem('myToken') ? "SignOut" : "SignIn"}
+        SignIn
+          {/* {sessionStorage.getItem('myToken') ? "SignOut" : "SignIn"} */}
         </button>
       </div>
       <h5>
