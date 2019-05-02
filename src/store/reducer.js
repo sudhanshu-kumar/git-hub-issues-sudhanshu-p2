@@ -133,24 +133,22 @@ const reducer = (state = intitialState, action) => {
       }
     }
 
-    case actionTypes.SEARCH_ISSUES:
-      {
-        const { event } = action.payload;
-        if (event.key === "Enter") {
-          if (event.target.value === "") {
-            return { ...state, issues: state.issuesCopy };
-          } else {
-            const options = {
-              keys: ["title"]
-            };
-            const fuse = new Fuse(state.issues, options);
-            const result = fuse.search(event.target.value);
-            return { ...state, issues: result };
-          }
+    case actionTypes.SEARCH_ISSUES: {
+      const { event } = action.payload;
+      if (event.key === "Enter") {
+        if (event.target.value === "") {
+          return { ...state, issues: state.issuesCopy };
+        } else {
+          const options = {
+            keys: ["title"]
+          };
+          const fuse = new Fuse(state.issues, options);
+          const result = fuse.search(event.target.value);
+          return { ...state, issues: result };
         }
       }
-      break;
-
+      return state;
+    }
     default:
       return state;
   }
